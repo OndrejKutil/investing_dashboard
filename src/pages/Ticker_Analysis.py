@@ -195,7 +195,7 @@ def main():
                     ),
                     hovermode='x unified'
                 )
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width='stretch')
 
                 st.markdown('---')
 
@@ -301,7 +301,7 @@ def main():
                         )
                     )
                     
-                    st.plotly_chart(fig2, use_container_width=True)
+                    st.plotly_chart(fig2, width='stretch')
 
                 st.markdown('---')
 
@@ -358,7 +358,7 @@ def main():
                         hovermode='x unified'
                     )
                     
-                    st.plotly_chart(fig_volume, use_container_width=True)
+                    st.plotly_chart(fig_volume, width='stretch')
 
                 st.markdown('---')
 
@@ -416,7 +416,7 @@ def main():
                         hovermode='x unified'
                     )
                     
-                    st.plotly_chart(fig_ma, use_container_width=True)
+                    st.plotly_chart(fig_ma, width='stretch')
 
                 st.markdown('---')
 
@@ -467,7 +467,7 @@ def main():
                     hovermode='x unified'
                 )
                 
-                st.plotly_chart(fig_vol, use_container_width=True)
+                st.plotly_chart(fig_vol, width='stretch')
 
                 st.markdown('---')
 
@@ -611,14 +611,14 @@ def main():
                 
                 if perf_data:
                     perf_df = pd.DataFrame(perf_data)
-                    st.dataframe(perf_df, use_container_width=True, hide_index=True)
+                    st.dataframe(perf_df, width='stretch', hide_index=True)
 
                 st.markdown('---')
 
 
                 # Put complete dataframe in a collapsible container
                 with st.expander("📊 Data Table", expanded=False):
-                    st.dataframe(df, use_container_width=True)
+                    st.dataframe(df, width='stretch')
 
         except Exception as e:
             st.error(f"An error occurred while fetching data for {ticker}: {str(e)}")

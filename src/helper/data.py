@@ -37,9 +37,10 @@ def add_moving_averages(data: pd.DataFrame, windows: list[int]) -> pd.DataFrame:
     Returns:
         pd.DataFrame: DataFrame with additional moving average columns.
     """
+    data = data.copy()  # Create a copy to avoid SettingWithCopyWarning
     for window in windows:
         ma_column = f'MA_{window}'
-        data[ma_column] = data.iloc[:, 0].rolling(window=window).mean()
+        data.loc[:, ma_column] = data.iloc[:, 0].rolling(window=window).mean()
     return data
 
 def add_daily_returns(data: pd.DataFrame) -> pd.DataFrame:
