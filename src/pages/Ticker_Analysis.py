@@ -1,8 +1,6 @@
 import streamlit as st
 import plotly.graph_objects as go
-import plotly.express as px
 import pandas as pd
-import numpy as np
 
 from helper.download_data import fetch_price_data, fetch_benchmark_data, fetch_pe_ratio, fetch_trailing_pe_ratio, fetch_forward_pe_ratio, fetch_comprehensive_data
 from helper.data import add_statistics
