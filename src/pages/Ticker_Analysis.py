@@ -7,10 +7,7 @@ from helper.data import add_statistics
 from helper.stats import Metrics
 
 
-# TODO ################################################################################################
-# TODO Move all dataframe calcultation to seperate helper function, this file should only handle the UI
-# TODO ################################################################################################
-
+LINE_COLOR: str = "#4bb4ff"
 
 def main():
     """Main function for the Ticker Analysis page"""
@@ -32,7 +29,7 @@ def main():
 
     with col2:
         # Benchmark selection dropdown
-        benchmark_options = {
+        benchmark_options = {   
             "MSCI World (URTH)": "URTH",
             "S&P 500 (SPY)": "SPY", 
             "Russell 2000 (IWM)": "IWM",
@@ -151,7 +148,7 @@ def main():
                         y=df['benchmark_cumulative_return'] * 100,  # Convert to percentage
                         mode='lines', 
                         name=f'Benchmark ({selected_benchmark}) Cumulative Return',
-                        line=dict(color='rgba(128, 128, 128, 0.7)', width=2, dash='dot'),
+                        line=dict(color='rgba(160, 160, 160, 0.7)', width=2, dash='dot'),
                         opacity=0.8,
                         hovertemplate='<b>Date:</b> %{x}<br><b>Benchmark Return:</b> %{y:.2f}%<extra></extra>'
                     ))
@@ -163,7 +160,7 @@ def main():
                         y=df['Cumulative_Return'] * 100,  # Convert to percentage
                         mode='lines', 
                         name=f'{ticker} Cumulative Return',
-                        line=dict(color='#1f77b4', width=3),
+                        line=dict(color=LINE_COLOR, width=3),
                         hovertemplate=f'<b>Date:</b> %{{x}}<br><b>{ticker} Return:</b> %{{y:.2f}}%<extra></extra>'
                     ))
                 
@@ -246,7 +243,7 @@ def main():
                         y=drawdown_pct,
                         mode='lines',
                         name='Drawdown from High',
-                        line=dict(color='#1f2937', width=2),
+                        line=dict(color=LINE_COLOR, width=2),
                         fill='tozeroy',
                         fillcolor='rgba(31, 41, 55, 0.1)',
                         hovertemplate='<b>Date:</b> %{x}<br><b>Drawdown:</b> %{y:.2f}%<br><b>Percentile:</b> %{customdata:.1f}%<extra></extra>',
@@ -317,7 +314,7 @@ def main():
                         x=df.index,
                         y=df['Volume'],
                         name='Volume',
-                        marker_color='rgba(31, 119, 180, 0.6)',
+                        marker_color='rgba(75, 180, 255, 0.7)',
                         hovertemplate='<b>Date:</b> %{x}<br><b>Volume:</b> %{y:,.0f}<extra></extra>'
                     ))
                     
@@ -376,7 +373,7 @@ def main():
                         y=df[ticker],
                         mode='lines',
                         name=f'{ticker} Price',
-                        line=dict(color='#1f77b4', width=2),
+                        line=dict(color=LINE_COLOR, width=2),
                         hovertemplate=f'<b>Date:</b> %{{x}}<br><b>{ticker}:</b> $%{{y:.2f}}<extra></extra>'
                     ))
                     
@@ -433,7 +430,7 @@ def main():
                     y=df['Volatility_30d'],
                     mode='lines',
                     name='30-day Volatility',
-                    line=dict(color='#1f77b4', width=2),
+                    line=dict(color=LINE_COLOR  , width=2),
                     hovertemplate='<b>Date:</b> %{x}<br><b>30-day Vol:</b> %{y:.1f}%<extra></extra>'
                 ))
                 
