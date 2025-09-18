@@ -2,8 +2,8 @@ import streamlit as st
 import plotly.graph_objects as go
 import pandas as pd
 
-from helper.download_data import fetch_price_data, fetch_benchmark_data, fetch_pe_ratio, fetch_trailing_pe_ratio, fetch_forward_pe_ratio, fetch_comprehensive_data
-from helper.data import add_statistics
+from helper.data.download_data import fetch_price_data, fetch_benchmark_data, fetch_pe_ratio, fetch_trailing_pe_ratio, fetch_forward_pe_ratio, fetch_comprehensive_data
+from helper.data.data import add_statistics
 from helper.stats import Metrics
 
 
@@ -418,7 +418,7 @@ def main():
                 # Volatility analysis
                 
                 # Calculate rolling volatility (annualized)
-                returns = df[ticker].pct_change().dropna()
+                returns = df[ticker].pct_change(fill_method=None).dropna()
                 df['Volatility_30d'] = returns.rolling(window=30).std() * (252 ** 0.5) * 100  # Annualized volatility in %
                 df['Volatility_60d'] = returns.rolling(window=60).std() * (252 ** 0.5) * 100
                 
@@ -541,12 +541,12 @@ def main():
                                 ticker_return = (ytd_data[ticker].iloc[-1] / ytd_data[ticker].iloc[0] - 1) * 100
                                 if 'benchmark' in ytd_data.columns:
                                     benchmark_return = (ytd_data['benchmark'].iloc[-1] / ytd_data['benchmark'].iloc[0] - 1) * 100
-                                    benchmark_vol = ytd_data['benchmark'].pct_change().std() * (annualization_factor ** 0.5) * 100
+                                    benchmark_vol = ytd_data['benchmark'].pct_change(fill_method=None).std() * (annualization_factor ** 0.5) * 100
                                 else:
                                     benchmark_return = None
                                     benchmark_vol = None
                                 
-                                ticker_vol = ytd_data[ticker].pct_change().std() * (annualization_factor ** 0.5) * 100
+                                ticker_vol = ytd_data[ticker].pct_change(fill_method=None).std() * (annualization_factor ** 0.5) * 100
                                 
                                 period_data = ytd_data
                         elif days and days <= len(df):
@@ -554,28 +554,28 @@ def main():
                             ticker_return = (period_data[ticker].iloc[-1] / period_data[ticker].iloc[0] - 1) * 100
                             if 'benchmark' in period_data.columns:
                                 benchmark_return = (period_data['benchmark'].iloc[-1] / period_data['benchmark'].iloc[0] - 1) * 100
-                                benchmark_vol = period_data['benchmark'].pct_change().std() * (annualization_factor ** 0.5) * 100
+                                benchmark_vol = period_data['benchmark'].pct_change(fill_method=None).std() * (annualization_factor ** 0.5) * 100
                             else:
                                 benchmark_return = None
                                 benchmark_vol = None
                             
-                            ticker_vol = period_data[ticker].pct_change().std() * (annualization_factor ** 0.5) * 100
+                            ticker_vol = period_data[ticker].pct_change(fill_method=None).std() * (annualization_factor ** 0.5) * 100
                         elif period_name == 'Total':
                             period_data = df
                             ticker_return = (period_data[ticker].iloc[-1] / period_data[ticker].iloc[0] - 1) * 100
                             if 'benchmark' in period_data.columns:
                                 benchmark_return = (period_data['benchmark'].iloc[-1] / period_data['benchmark'].iloc[0] - 1) * 100
-                                benchmark_vol = period_data['benchmark'].pct_change().std() * (annualization_factor ** 0.5) * 100
+                                benchmark_vol = period_data['benchmark'].pct_change(fill_method=None).std() * (annualization_factor ** 0.5) * 100
                             else:
                                 benchmark_return = None
                                 benchmark_vol = None
                             
-                            ticker_vol = period_data[ticker].pct_change().std() * (annualization_factor ** 0.5) * 100
+                            ticker_vol = period_data[ticker].pct_change(fill_method=None).std() * (annualization_factor ** 0.5) * 100
                         else:
                             continue
                         
                         # Calculate Sharpe ratio (assuming 0% risk-free rate)
-                        ticker_returns = period_data[ticker].pct_change().dropna()
+                        ticker_returns = period_data[ticker].pct_change(fill_method=None).dropna()
                         if len(ticker_returns) > 0 and ticker_vol > 0:
                             sharpe_ratio = (ticker_returns.mean() * annualization_factor) / (ticker_vol / 100)
                         else:
@@ -583,7 +583,7 @@ def main():
                         
                         # Calculate benchmark Sharpe ratio
                         if 'benchmark' in period_data.columns and benchmark_vol is not None and benchmark_vol > 0:
-                            benchmark_returns = period_data['benchmark'].pct_change().dropna()
+                            benchmark_returns = period_data['benchmark'].pct_change(fill_method=None).dropna()
                             if len(benchmark_returns) > 0:
                                 benchmark_sharpe = (benchmark_returns.mean() * annualization_factor) / (benchmark_vol / 100)
                             else:
@@ -610,6 +610,89 @@ def main():
 
                 st.markdown('---')
 
+                # MACD chart
+                if all(col in df.columns for col in ['MACD', 'MACD_Signal', 'MACD_Hist']):
+                    fig_macd = go.Figure()
+
+                    # MACD line
+                    fig_macd.add_trace(go.Scatter(
+                        x=df.index,
+                        y=df['MACD'],
+                        mode='lines',
+                        name='MACD',
+                        line=dict(color='blue', width=2),
+                        hovertemplate='<b>Date:</b> %{x}<br><b>MACD:</b> %{y:.2f}<extra></extra>'
+                    ))
+
+                    # MACD Signal line
+                    fig_macd.add_trace(go.Scatter(
+                        x=df.index,
+                        y=df['MACD_Signal'],
+                        mode='lines',
+                        name='Signal',
+                        line=dict(color='orange', width=2),
+                        hovertemplate='<b>Date:</b> %{x}<br><b>Signal:</b> %{y:.2f}<extra></extra>'
+                    ))
+
+                    # MACD Histogram (bar)
+                    fig_macd.add_trace(go.Bar(
+                        x=df.index,
+                        y=df['MACD_Hist'],
+                        name='MACD Histogram',
+                        marker_color='rgba(75,180,255,0.5)',
+                        hovertemplate='<b>Date:</b> %{x}<br><b>MACD Hist:</b> %{y:.2f}<extra></extra>'
+                    ))
+
+                    fig_macd.update_layout(
+                        title=f'{ticker} MACD Indicator',
+                        xaxis_title='Date',
+                        yaxis_title='MACD',
+                        height=350,
+                        legend=dict(
+                            orientation="h",
+                            yanchor="bottom",
+                            y=1.02,
+                            xanchor="right",
+                            x=1
+                        ),
+                        hovermode='x unified'
+                    )
+
+                    st.plotly_chart(fig_macd, use_container_width=True)
+
+
+            # RSI chart
+            if 'RSI' in df.columns:
+                fig_rsi = go.Figure()
+                fig_rsi.add_trace(go.Scatter(
+                    x=df.index,
+                    y=df['RSI'],
+                    mode='lines',
+                    name='RSI',
+                    line=dict(color='#8b5cf6', width=2),  # Deep violet for dark theme
+                    hovertemplate='<b>Date:</b> %{x}<br><b>RSI:</b> %{y:.2f}<extra></extra>'
+                ))
+                # Add overbought/oversold reference lines
+                fig_rsi.add_hline(y=70, line_dash="dash", line_color="#ef4444", line_width=1)   # Red-600
+                fig_rsi.add_hline(y=30, line_dash="dash", line_color="#22d3ee", line_width=1)   # Cyan-400
+                fig_rsi.update_layout(
+                    title=f'{ticker} Relative Strength Index (RSI)',
+                    xaxis_title='Date',
+                    yaxis_title='RSI',
+                    height=350,
+                    yaxis=dict(range=[0, 100]),
+                    legend=dict(
+                        orientation="h",
+                        yanchor="bottom",
+                        y=1.02,
+                        xanchor="right",
+                        x=1,
+                        font=dict(color="#e5e7eb")  # Gray-200 for legend text
+                    ),
+                    font=dict(color="#e5e7eb"),  # Gray-200 for axis/title text
+                    hovermode='x unified'
+                )
+                st.plotly_chart(fig_rsi, use_container_width=True)
 
                 # Put complete dataframe in a collapsible container
                 with st.expander("📊 Data Table", expanded=False):

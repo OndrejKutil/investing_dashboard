@@ -21,6 +21,8 @@ def add_statistics(data: pd.DataFrame, ticker: str = None) -> pd.DataFrame:
     data = add_cumulative_returns(data)
     data = add_cummulative_all_time_high(data)
     data = add_drawdown_from_high(data)
+    data = add_macd(data)
+    data = add_rsi(data)
 
     
     return data
@@ -97,8 +99,42 @@ def add_drawdown_from_high(data: pd.DataFrame) -> pd.DataFrame:
     return data
 
 
+def add_macd(data: pd.DataFrame, short_window: int = 12, long_window: int = 26, signal_window: int = 9) -> pd.DataFrame:
+    """
+    Add MACD (Moving Average Convergence Divergence) columns to the DataFrame.
 
+    Args:
+        data (pd.DataFrame): DataFrame with date as index and price data.
+        short_window (int): Window size for the short-term EMA.
+        long_window (int): Window size for the long-term EMA.
+        signal_window (int): Window size for the signal line EMA.
 
+    Returns:
+        pd.DataFrame: DataFrame with additional MACD columns.
+    """
+    data = data.copy()  # Create a copy to avoid SettingWithCopyWarning
+    exp1 = data.iloc[:, 0].ewm(span=short_window, adjust=False).mean()
+    exp2 = data.iloc[:, 0].ewm(span=long_window, adjust=False).mean()
+    data['MACD'] = exp1 - exp2
+    data['MACD_Signal'] = data['MACD'].ewm(span=signal_window, adjust=False).mean()
+    data['MACD_Hist'] = data['MACD'] - data['MACD_Signal']
+    return data
 
+def add_rsi(data: pd.DataFrame, window: int = 14) -> pd.DataFrame:
+    """
+    Add RSI (Relative Strength Index) column to the DataFrame.
 
+    Args:
+        data (pd.DataFrame): DataFrame with date as index and price data.
+        window (int): Window size for RSI calculation.
 
+    Returns:
+        pd.DataFrame: DataFrame with additional RSI column.
+    """
+    data = data.copy()  # Create a copy to avoid SettingWithCopyWarning
+    delta = data.iloc[:, 0].diff()
+    gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
+    rs = gain / loss
+    data['RSI'] = 100 - (100 / (1 + rs))
+    return data
