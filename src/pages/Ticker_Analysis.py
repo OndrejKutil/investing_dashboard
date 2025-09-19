@@ -6,8 +6,10 @@ from helper.data.download_data import fetch_price_data, fetch_benchmark_data, fe
 from helper.data.data import add_statistics
 from helper.stats import Metrics
 
-
-LINE_COLOR: str = "#4bb4ff"
+from utils.theme import (
+    LINE_COLOR, chart_background, CHART_COLORS, STATUS_COLORS, 
+    RSI_COLORS, TEXT_COLORS, GRID_COLORS, FILL_COLORS
+)
 
 def main():
     """Main function for the Ticker Analysis page"""
@@ -148,7 +150,7 @@ def main():
                         y=df['benchmark_cumulative_return'] * 100,  # Convert to percentage
                         mode='lines', 
                         name=f'Benchmark ({selected_benchmark}) Cumulative Return',
-                        line=dict(color='rgba(160, 160, 160, 0.7)', width=2, dash='dot'),
+                        line=dict(color=CHART_COLORS["benchmark"], width=2, dash='dot'),
                         opacity=0.8,
                         hovertemplate='<b>Date:</b> %{x}<br><b>Benchmark Return:</b> %{y:.2f}%<extra></extra>'
                     ))
@@ -168,7 +170,7 @@ def main():
                 fig.add_hline(
                     y=0,
                     line_dash="solid",
-                    line_color="rgba(0, 0, 0, 0.3)",
+                    line_color=GRID_COLORS["zero_line"],
                     line_width=1
                 )
                 
@@ -188,7 +190,9 @@ def main():
                         xanchor="right",
                         x=1
                     ),
-                    hovermode='x unified'
+                    hovermode='x unified',
+                    font=dict(color=TEXT_COLORS["primary"]),
+                    **chart_background
                 )
                 st.plotly_chart(fig, width='stretch')
 
@@ -206,16 +210,16 @@ def main():
                     percentiles = [0.0, 0.05, 0.25, 0.50, 1.0]
                     zone_labels = ['Worst', 'Deep', 'Moderate', 'Normal']
                     zone_colors = [
-                        'rgba(34, 197, 94, 0.15)',   # Green
-                        'rgba(132, 204, 22, 0.15)',  # Light green  
-                        'rgba(245, 158, 11, 0.15)',  # Orange
-                        'rgba(220, 38, 38, 0.15)'    # Red
+                        STATUS_COLORS["excellent_zone"],  # Green
+                        STATUS_COLORS["good_zone"],       # Light green  
+                        STATUS_COLORS["moderate_zone"],   # Orange
+                        STATUS_COLORS["poor_zone"]        # Red
                     ]
                     legend_colors = [
-                        'rgba(34, 197, 94, 0.8)',   # Green
-                        'rgba(132, 204, 22, 0.8)',  # Light green
-                        'rgba(245, 158, 11, 0.8)',  # Orange
-                        'rgba(220, 38, 38, 0.8)'    # Red
+                        STATUS_COLORS["excellent_legend"], # Green
+                        STATUS_COLORS["good_legend"],     # Light green
+                        STATUS_COLORS["moderate_legend"], # Orange
+                        STATUS_COLORS["poor_legend"]      # Red
                     ]
                     
                     # Calculate actual percentile values
@@ -245,7 +249,7 @@ def main():
                         name='Drawdown from High',
                         line=dict(color=LINE_COLOR, width=2),
                         fill='tozeroy',
-                        fillcolor='rgba(31, 41, 55, 0.1)',
+                        fillcolor=FILL_COLORS["drawdown"],
                         hovertemplate='<b>Date:</b> %{x}<br><b>Drawdown:</b> %{y:.2f}%<br><b>Percentile:</b> %{customdata:.1f}%<extra></extra>',
                         customdata=drawdown_percentile
                     ))
@@ -272,7 +276,7 @@ def main():
                         fig2.add_hline(
                             y=level,
                             line_dash="dash",
-                            line_color="rgba(107, 114, 128, 0.6)",
+                            line_color=GRID_COLORS["major"],
                             line_width=1
                         )
 
@@ -293,7 +297,9 @@ def main():
                             y=1.02,
                             xanchor="right",
                             x=1
-                        )
+                        ),
+                        font=dict(color=TEXT_COLORS["primary"]),
+                        **chart_background
                     )
                     
                     st.plotly_chart(fig2, width='stretch')
@@ -314,7 +320,7 @@ def main():
                         x=df.index,
                         y=df['Volume'],
                         name='Volume',
-                        marker_color='rgba(75, 180, 255, 0.7)',
+                        marker_color=CHART_COLORS["volume_alpha"],
                         hovertemplate='<b>Date:</b> %{x}<br><b>Volume:</b> %{y:,.0f}<extra></extra>'
                     ))
                     
@@ -324,7 +330,7 @@ def main():
                         y=df['Volume_MA_20'],
                         mode='lines',
                         name='20-day MA',
-                        line=dict(color='orange', width=2),
+                        line=dict(color=CHART_COLORS["ma_20"], width=2),
                         hovertemplate='<b>Date:</b> %{x}<br><b>20-day MA:</b> %{y:,.0f}<extra></extra>'
                     ))
                     
@@ -333,7 +339,7 @@ def main():
                         y=df['Volume_MA_50'],
                         mode='lines',
                         name='50-day MA',
-                        line=dict(color='red', width=2),
+                        line=dict(color=CHART_COLORS["ma_50"], width=2),
                         hovertemplate='<b>Date:</b> %{x}<br><b>50-day MA:</b> %{y:,.0f}<extra></extra>'
                     ))
                     
@@ -350,7 +356,9 @@ def main():
                             xanchor="right",
                             x=1
                         ),
-                        hovermode='x unified'
+                        hovermode='x unified',
+                        font=dict(color=TEXT_COLORS["primary"]),
+                        **chart_background
                     )
                     
                     st.plotly_chart(fig_volume, width='stretch')
@@ -379,9 +387,9 @@ def main():
                     
                     # Add moving averages
                     ma_configs = [
-                        ('MA_20', '20-day MA', 'orange'),
-                        ('MA_50', '50-day MA', 'red'),
-                        ('MA_200', '200-day MA', 'purple')
+                        ('MA_20', '20-day MA', CHART_COLORS["ma_20"]),
+                        ('MA_50', '50-day MA', CHART_COLORS["ma_50"]),
+                        ('MA_200', '200-day MA', CHART_COLORS["ma_200"])
                     ]
                     
                     for ma_col, ma_name, color in ma_configs:
@@ -408,7 +416,9 @@ def main():
                             xanchor="right",
                             x=1
                         ),
-                        hovermode='x unified'
+                        hovermode='x unified',
+                        font=dict(color=TEXT_COLORS["primary"]),
+                        **chart_background
                     )
                     
                     st.plotly_chart(fig_ma, width='stretch')
@@ -430,7 +440,7 @@ def main():
                     y=df['Volatility_30d'],
                     mode='lines',
                     name='30-day Volatility',
-                    line=dict(color=LINE_COLOR  , width=2),
+                    line=dict(color=CHART_COLORS["volatility_30d"], width=2),
                     hovertemplate='<b>Date:</b> %{x}<br><b>30-day Vol:</b> %{y:.1f}%<extra></extra>'
                 ))
                 
@@ -439,7 +449,7 @@ def main():
                     y=df['Volatility_60d'],
                     mode='lines',
                     name='60-day Volatility',
-                    line=dict(color='orange', width=2),
+                    line=dict(color=CHART_COLORS["volatility_60d"], width=2),
                     hovertemplate='<b>Date:</b> %{x}<br><b>60-day Vol:</b> %{y:.1f}%<extra></extra>'
                 ))
                 
@@ -459,7 +469,9 @@ def main():
                         xanchor="right",
                         x=1
                     ),
-                    hovermode='x unified'
+                    hovermode='x unified',
+                    font=dict(color=TEXT_COLORS["primary"]),
+                    **chart_background
                 )
                 
                 st.plotly_chart(fig_vol, width='stretch')
@@ -620,7 +632,7 @@ def main():
                         y=df['MACD'],
                         mode='lines',
                         name='MACD',
-                        line=dict(color='blue', width=2),
+                        line=dict(color=CHART_COLORS["macd"], width=2),
                         hovertemplate='<b>Date:</b> %{x}<br><b>MACD:</b> %{y:.2f}<extra></extra>'
                     ))
 
@@ -630,7 +642,7 @@ def main():
                         y=df['MACD_Signal'],
                         mode='lines',
                         name='Signal',
-                        line=dict(color='orange', width=2),
+                        line=dict(color=CHART_COLORS["macd_signal"], width=2),
                         hovertemplate='<b>Date:</b> %{x}<br><b>Signal:</b> %{y:.2f}<extra></extra>'
                     ))
 
@@ -639,7 +651,7 @@ def main():
                         x=df.index,
                         y=df['MACD_Hist'],
                         name='MACD Histogram',
-                        marker_color='rgba(75,180,255,0.5)',
+                        marker_color=CHART_COLORS["macd_hist"],
                         hovertemplate='<b>Date:</b> %{x}<br><b>MACD Hist:</b> %{y:.2f}<extra></extra>'
                     ))
 
@@ -655,7 +667,9 @@ def main():
                             xanchor="right",
                             x=1
                         ),
-                        hovermode='x unified'
+                        hovermode='x unified',
+                        font=dict(color=TEXT_COLORS["primary"]),
+                        **chart_background
                     )
 
                     st.plotly_chart(fig_macd, use_container_width=True)
@@ -669,12 +683,12 @@ def main():
                     y=df['RSI'],
                     mode='lines',
                     name='RSI',
-                    line=dict(color='#8b5cf6', width=2),  # Deep violet for dark theme
+                    line=dict(color=LINE_COLOR, width=2),
                     hovertemplate='<b>Date:</b> %{x}<br><b>RSI:</b> %{y:.2f}<extra></extra>'
                 ))
                 # Add overbought/oversold reference lines
-                fig_rsi.add_hline(y=70, line_dash="dash", line_color="#ef4444", line_width=1)   # Red-600
-                fig_rsi.add_hline(y=30, line_dash="dash", line_color="#22d3ee", line_width=1)   # Cyan-400
+                fig_rsi.add_hline(y=70, line_dash="dash", line_color=RSI_COLORS["overbought"], line_width=1)
+                fig_rsi.add_hline(y=30, line_dash="dash", line_color=RSI_COLORS["oversold"], line_width=1)
                 fig_rsi.update_layout(
                     title=f'{ticker} Relative Strength Index (RSI)',
                     xaxis_title='Date',
@@ -687,15 +701,16 @@ def main():
                         y=1.02,
                         xanchor="right",
                         x=1,
-                        font=dict(color="#e5e7eb")  # Gray-200 for legend text
+                        font=dict(color=TEXT_COLORS["primary"])  # Light text for legend
                     ),
-                    font=dict(color="#e5e7eb"),  # Gray-200 for axis/title text
-                    hovermode='x unified'
+                    font=dict(color=TEXT_COLORS["primary"]),  # Light text for axis/title
+                    hovermode='x unified',
+                    **chart_background
                 )
                 st.plotly_chart(fig_rsi, use_container_width=True)
 
                 # Put complete dataframe in a collapsible container
-                with st.expander("📊 Data Table", expanded=False):
+                with st.expander("Data Table", expanded=False):
                     st.dataframe(df, width='stretch')
 
         except Exception as e:
