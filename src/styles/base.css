@@ -1,0 +1,137 @@
+/* Base styles and CSS variables for Investment Dashboard */
+
+:root {
+    /* Dark Theme Colors */
+    --bg-dark: #1a1b23;
+    --bg-secondary: #212430;
+    --bg-card: #2a2d3a;
+    --bg-input: #363842;
+    
+    /* Yellow Accent Colors */
+    --accent-primary: #fbbf24; /* bright yellow */
+    --accent-secondary: #f59e0b; /* amber */
+    --accent-hover: #fcd34d; /* lighter yellow */
+    --accent-muted: rgba(251, 191, 36, 0.1); /* very light yellow overlay */
+    
+    /* Text Colors */
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-accent: #fbbf24;
+    
+    /* Border Colors */
+    --border-light: #374151;
+    --border-accent: #fbbf24;
+    
+    /* Status Colors */
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    --info: #3b82f6;
+}
+
+/* Base Styling */
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Main App Container */
+#react-entry-point > div {
+    background-color: var(--bg-dark);
+    min-height: 100vh;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    margin-top: 0;
+}
+
+h1 {
+    color: var(--text-accent);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+h2 {
+    color: var(--text-accent);
+    font-size: 1.8rem;
+    font-weight: 600;
+    border-bottom: 2px solid var(--accent-primary);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+h3 {
+    color: var(--accent-secondary);
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+/* Links */
+a {
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+/* Loading States */
+.loading {
+    color: var(--text-muted);
+    text-align: center;
+    padding: 2rem;
+}
+
+.spinner {
+    border: 3px solid var(--bg-secondary);
+    border-top: 3px solid var(--accent-primary);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.text-accent { color: var(--accent-primary); }
+.text-muted { color: var(--text-muted); }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+.mb-5 { margin-bottom: 2.5rem; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.my-5 { margin-top: 2.5rem; margin-bottom: 2.5rem; }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+}

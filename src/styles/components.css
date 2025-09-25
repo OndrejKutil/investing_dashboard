@@ -1,0 +1,207 @@
+/* Components styles (buttons, cards, forms) for Investment Dashboard */
+
+/* Buttons */
+.btn, button, .dash-button {
+    background-color: var(--accent-primary);
+    color: var(--bg-dark);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn:hover, button:hover, .dash-button:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(251, 191, 36, 0.3);
+}
+
+.btn-secondary {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-light);
+}
+
+.btn-secondary:hover {
+    background-color: var(--bg-input);
+    border-color: var(--accent-primary);
+    color: var(--text-accent);
+}
+
+.btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+}
+
+/* Cards and Containers */
+.card, .dashboard-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.card:hover, .dashboard-card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: 0 8px 15px rgba(251, 191, 36, 0.1);
+}
+
+/* Form Inputs */
+input, select, textarea, .form-control {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus, .form-control:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
+}
+
+.form-label {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Dropdown and Select styling */
+.Select-control, .Select--single > .Select-control {
+    background-color: var(--bg-input);
+    border-color: var(--border-light);
+}
+
+.Select-control:hover, .Select--single > .Select-control:hover {
+    border-color: var(--accent-primary);
+}
+
+.Select-menu-outer {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+}
+
+.Select-option {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.Select-option:hover, .Select-option.is-focused {
+    background-color: var(--accent-muted);
+    color: var(--text-accent);
+}
+
+/* Sliders */
+.rc-slider {
+    background-color: var(--bg-secondary);
+}
+
+.rc-slider-track {
+    background-color: var(--accent-primary);
+}
+
+.rc-slider-handle {
+    border-color: var(--accent-primary);
+    background-color: var(--accent-primary);
+}
+
+.rc-slider-handle:hover {
+    border-color: var(--accent-hover);
+    box-shadow: 0 0 0 5px rgba(251, 191, 36, 0.2);
+}
+
+/* Progress Bars */
+.progress-bar {
+    background-color: var(--bg-secondary);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    background-color: var(--accent-primary);
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+/* Tabs */
+.tab {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab:hover {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+}
+
+.tab.active {
+    background-color: var(--accent-primary);
+    color: var(--bg-dark);
+    font-weight: 600;
+}
+
+/* Metric Cards */
+.metric-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-left: 4px solid var(--accent-primary);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+    border-left-color: var(--accent-hover);
+    box-shadow: 0 4px 12px rgba(251, 191, 36, 0.1);
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    margin-bottom: 0.5rem;
+}
+
+.metric-label {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive Components */
+@media (max-width: 768px) {
+    .card, .dashboard-card {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+    
+    .metric-card {
+        padding: 1rem;
+    }
+    
+    .metric-value {
+        font-size: 1.5rem;
+    }
+}

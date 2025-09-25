@@ -1,5 +1,6 @@
 pandas
 yfinance
-streamlit
+dash
+dash-bootstrap-components
 plotly
 dotenv

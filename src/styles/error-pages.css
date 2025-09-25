@@ -1,0 +1,44 @@
+/* 404 Error page styles for Investment Dashboard */
+
+/* 404 Page Specific Styling */
+.error-404 {
+    text-align: center;
+    min-height: 10vh;
+}
+
+.error-404 h1 {
+    font-size: 4rem;
+    color: var(--accent-primary);
+    text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
+    border: none;
+    margin: 0; /* Remove all margins */
+}
+
+.error-404 h2 {
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    border: none;
+    margin: 0.25rem 0 1.5rem 0; /* Small top margin, larger bottom */
+    padding: 0; /* Remove any padding */
+}
+
+.error-404 p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 500px;
+}
+
+/* Responsive Design for 404 */
+@media (max-width: 768px) {
+    .error-404 h1 {
+        font-size: 3rem;
+    }
+    
+    .error-404 h2 {
+        font-size: 1.3rem;
+    }
+    
+    .error-404 p {
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,175 @@
+/* Dash-specific component styles for Investment Dashboard */
+
+/* Dash Components Styling */
+.dash-table-container {
+    background-color: var(--bg-card);
+    border-radius: 8px;
+    border: 1px solid var(--border-light);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner {
+    background-color: var(--bg-card);
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner table {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner table th {
+    background-color: var(--bg-secondary);
+    color: var(--text-accent);
+    border-bottom: 2px solid var(--accent-primary);
+}
+
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner table td {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border-color: var(--border-light);
+}
+
+/* Plotly Chart Container Styling */
+.plotly {
+    background-color: var(--bg-card);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+/* Dash Dropdown Styling */
+.dash-dropdown {
+    background-color: var(--bg-input);
+}
+
+.dash-dropdown .Select-control {
+    background-color: var(--bg-input);
+    border-color: var(--border-light);
+    color: var(--text-primary);
+}
+
+.dash-dropdown .Select-control:hover {
+    border-color: var(--accent-primary);
+}
+
+.dash-dropdown .Select-menu {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-light);
+}
+
+.dash-dropdown .Select-option {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.dash-dropdown .Select-option:hover,
+.dash-dropdown .Select-option.is-focused {
+    background-color: var(--accent-muted);
+    color: var(--text-accent);
+}
+
+.dash-dropdown .Select-value-label {
+    color: var(--text-primary);
+}
+
+/* Dash Input Styling */
+.dash-input {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    border: 1px solid var(--border-light);
+}
+
+.dash-input:focus {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.2);
+}
+
+/* Dash Slider Styling */
+.dash-slider .rc-slider {
+    background-color: var(--bg-secondary);
+}
+
+.dash-slider .rc-slider-track {
+    background-color: var(--accent-primary);
+}
+
+.dash-slider .rc-slider-handle {
+    border-color: var(--accent-primary);
+    background-color: var(--accent-primary);
+}
+
+.dash-slider .rc-slider-handle:hover {
+    border-color: var(--accent-hover);
+    box-shadow: 0 0 0 5px rgba(251, 191, 36, 0.2);
+}
+
+.dash-slider .rc-slider-mark-text {
+    color: var(--text-muted);
+}
+
+/* Dash Tabs Styling */
+.dash-tabs {
+    border-bottom: 1px solid var(--border-light);
+}
+
+.dash-tabs .tab {
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-light);
+    border-bottom: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dash-tabs .tab:hover {
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+}
+
+.dash-tabs .tab--selected {
+    background-color: var(--accent-primary);
+    color: var(--bg-dark);
+    font-weight: 600;
+    border-color: var(--accent-primary);
+}
+
+/* Dash Loading */
+.dash-loading {
+    color: var(--text-muted);
+}
+
+.dash-loading .dash-spinner {
+    border-color: var(--bg-secondary);
+    border-top-color: var(--accent-primary);
+}
+
+/* Dash Graph Container */
+.dash-graph {
+    background-color: var(--bg-card);
+    border-radius: 8px;
+    padding: 0.5rem;
+}
+
+/* Dash Checklist */
+.dash-checklist label {
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+}
+
+.dash-checklist input[type="checkbox"] {
+    accent-color: var(--accent-primary);
+    margin-right: 0.5rem;
+}
+
+/* Dash Radio Items */
+.dash-radioitems label {
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+}
+
+.dash-radioitems input[type="radio"] {
+    accent-color: var(--accent-primary);
+    margin-right: 0.5rem;
+}
